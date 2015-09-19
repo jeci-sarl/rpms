@@ -9,7 +9,7 @@ License: LGPL
 Group: Applications/Multimedia
 URL: http://www.audiocoding.com/
 
-Source: http://dl.sf.net/faac/faac-%{version}.tar.gz
+Source: http://sourceforge.net/projects/faac/files/faac-src/faac-%{version}/faac-%{version}.tar.gz
 Patch0: faac-1.25-libmp4v2.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
