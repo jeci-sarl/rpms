@@ -9,7 +9,7 @@ License: Apache License V2.0
 Group: System Environment/Libraries
 URL: http://opencore-amr.sourceforge.net/
 
-Source: http://dl.sf.net/project/opencore-amr/opencore-amr/%{version}/opencore-amr-%{version}.tar.gz
+Source: http://sourceforge.net/projects/opencore-amr/files/opencore-amr/%{version}/opencore-amr-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildRequires: gcc-c++
