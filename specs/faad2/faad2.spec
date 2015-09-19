@@ -18,7 +18,7 @@ License: GPL
 Group: Applications/Multimedia
 URL: http://www.audiocoding.com/
 
-Source: http://dl.sf.net/faac/faad2-%{version}.tar.gz
+Source: http://sourceforge.net/projects/faac/files/faad2-src/faad2-%{version}/faad2-%{version}.tar.gz
 Patch0: faad2-2.5-buildfix.patch
 Patch1: faad2-2.5-faacDec.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
