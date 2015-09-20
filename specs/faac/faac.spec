@@ -3,14 +3,14 @@
 
 Summary: Reference encoder and encoding library for MPEG2/4 AAC
 Name: faac
-Version: 1.26
+Version: 1.28
 Release: 1%{?dist}
 License: LGPL
 Group: Applications/Multimedia
 URL: http://www.audiocoding.com/
 
 Source: http://sourceforge.net/projects/faac/files/faac-src/faac-%{version}/faac-%{version}.tar.gz
-Patch0: faac-1.25-libmp4v2.patch
+Patch0: faac-1.28-external-libmp4v2.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 BuildRequires: libmp4v2-devel
@@ -34,12 +34,9 @@ multichannel and gapless encoding.
 This package contains development files and documentation for libfaac.
 
 %prep
-%setup -n %{name}
-#patch0 -p1 -b .libmp4v2
-# Don't ask...
+%setup 
+%patch0 -p1
 find . -type f -exec dos2unix {} \;
-find . -type f -exec chmod 644 {} \;
-find . -type d -exec chmod 755 {} \;
 
 %build
 sh bootstrap
@@ -60,6 +57,7 @@ sh bootstrap
 %files
 %defattr(-, root, root, 0755)
 %doc AUTHORS ChangeLog COPYING NEWS README TODO docs/*
+%doc %{_mandir}/man1/faac.1*
 %{_bindir}/faac
 %{_libdir}/libfaac.so.*
 
