@@ -9,17 +9,17 @@
 %{?el3:%define _without_glibc232 1}
 %{?el3:%define _without_modxorg 1}
 
-%define date 20101111
+%define date 20150919
 
 Summary: Library for encoding and decoding H264/AVC video streams
 Name: x264
 Version: 0.0.0
-Release: 0.4.%{date}%{?dist}
+Release: 0.146.%{date}%{?dist}
 License: GPL
 Group: System Environment/Libraries
-URL: http://developers.videolan.org/x264.html
+URL: http://www.videolan.org/developers/x264.html
 
-Source: http://downloads.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-%{date}-2245.tar.bz2
+Source: http://downloads.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-%{date}-2245-stable.tar.bz2
 Patch0: x264-20090708-glibc232.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
@@ -45,7 +45,7 @@ This package contains the files required to develop programs that will encode
 H264/AVC video streams using the x264 library.
 
 %prep
-%setup -n %{name}-snapshot-%{date}-2245
+%setup -n %{name}-snapshot-%{date}-2245-stable
 # configure hardcodes X11 lib path
 %{__perl} -pi -e 's|/usr/X11R6/lib |/usr/X11R6/%{_lib} |g' configure
 
@@ -88,8 +88,8 @@ H264/AVC video streams using the x264 library.
 %defattr(-, root, root, 0755)
 %doc doc/*.txt
 %{_includedir}/x264.h
+%{_includedir}/x264_config.h
 %{_libdir}/pkgconfig/x264.pc
-%{_libdir}/libx264.a
 %{_libdir}/libx264.so
 
 %changelog
