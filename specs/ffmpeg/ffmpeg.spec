@@ -12,6 +12,10 @@
 ### Use native xvid
 %define _without_xvid 1
 
+%{?el7:%define _without_faad 1}
+%{?el7:%define _without_rtmp 1}
+%{?el7:%define _without_dirac 1}
+
 ### Disabled speex support as ffmpeg needs speex 1.2 and RHEL5 ships with 1.0.5
 
 %{?el5:%define _without_dc1394 1}
@@ -40,7 +44,7 @@
 
 Summary: Utilities and libraries to record, convert and stream audio and video
 Name: ffmpeg
-Version: 0.6.5
+Version: 2.8
 Release: 1%{?dist}
 License: GPL
 Group: Applications/Multimedia
@@ -53,6 +57,7 @@ BuildRequires: SDL-devel
 BuildRequires: freetype-devel
 BuildRequires: imlib2-devel
 BuildRequires: zlib-devel
+%{!?_without_speex:Requires: speex-devel} \
 %{!?_without_a52dec:BuildRequires: a52dec-devel}
 %{!?_without_dc1394:BuildRequires: libdc1394-devel}
 %{!?_without_dirac:BuildRequires: dirac-devel}
@@ -91,6 +96,7 @@ Summary: Header files and static library for the ffmpeg codec library
 Group: Development/Libraries
 Requires: %{name} = %{version}
 Requires: imlib2-devel, SDL-devel, freetype-devel, zlib-devel, pkgconfig
+%{!?_without_speex:Requires: speex-devel} \
 %{!?_without_a52dec:Requires: a52dec-devel}
 %{!?_without_dc1394:Requires: libdc1394-devel}
 %{!?_without_dirac:Requires: dirac-devel}
@@ -160,7 +166,6 @@ export CFLAGS="%{optflags}"
     --extra-cflags="%{optflags} -fPIC" \
 %endif
     --enable-avfilter \
-    --enable-avfilter-lavf \
 %{!?_without_dc1394:--enable-libdc1394} \
 %{!?_without_dirac:--enable-libdirac} \
 %{!?_without_faac:--enable-libfaac} \
@@ -217,11 +222,11 @@ chcon -t textrel_shlib_t %{_libdir}/libav{codec,device,format,util}.so.*.*.* &>/
 
 %files
 %defattr(-, root, root, 0755)
-%doc Changelog COPYING* CREDITS INSTALL MAINTAINERS README
-%doc %{_mandir}/man1/ffprobe.1*
-%doc %{_mandir}/man1/ffmpeg.1*
-%doc %{_mandir}/man1/ffplay.1*
-%doc %{_mandir}/man1/ffserver.1*
+%doc Changelog COPYING* CREDITS INSTALL.md LICENSE.md MAINTAINERS README.md RELEASE RELEASE_NOTES VERSION
+%doc %{_mandir}/man1/*
+%doc %{_mandir}/man3/*
+%docdir /usr/share/doc/ffmpeg/
+/usr/share/doc/ffmpeg/
 %{_bindir}/ffprobe
 %{_bindir}/ffmpeg
 %{_bindir}/ffplay
@@ -233,6 +238,7 @@ chcon -t textrel_shlib_t %{_libdir}/libav{codec,device,format,util}.so.*.*.* &>/
 %{_libdir}/libavformat.so.*
 %{_libdir}/libavutil.so.*
 %{_libdir}/libswscale.so.*
+%{_libdir}/libswresample.so.*
 #%{_libdir}/vhook/
 
 %files devel
@@ -244,24 +250,28 @@ chcon -t textrel_shlib_t %{_libdir}/libav{codec,device,format,util}.so.*.*.* &>/
 %{_includedir}/libavformat/
 %{_includedir}/libavutil/
 %{_includedir}/libswscale/
+%{_includedir}/libswresample/
 %{_libdir}/libavcodec.a
 %{_libdir}/libavdevice.a
 %{_libdir}/libavfilter.a
 %{_libdir}/libavformat.a
 %{_libdir}/libavutil.a
 %{_libdir}/libswscale.a
+%{_libdir}/libswresample.a
 %{_libdir}/libavcodec.so
 %{_libdir}/libavdevice.so
 %{_libdir}/libavfilter.so
 %{_libdir}/libavformat.so
 %{_libdir}/libavutil.so
 %{_libdir}/libswscale.so
+%{_libdir}/libswresample.so
 %{_libdir}/pkgconfig/libavcodec.pc
 %{_libdir}/pkgconfig/libavdevice.pc
 %{_libdir}/pkgconfig/libavfilter.pc
 %{_libdir}/pkgconfig/libavformat.pc
 %{_libdir}/pkgconfig/libavutil.pc
 %{_libdir}/pkgconfig/libswscale.pc
+%{_libdir}/pkgconfig/libswresample.pc
 
 %files libpostproc
 %defattr(-, root, root, 0755)
