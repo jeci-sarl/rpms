@@ -45,7 +45,7 @@
 Summary: Utilities and libraries to record, convert and stream audio and video
 Name: ffmpeg
 Version: 2.8
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPL
 Group: Applications/Multimedia
 URL: http://ffmpeg.org/
@@ -134,6 +134,7 @@ Provides: libpostproc-devel = 1.0-1
 Obsoletes: libpostproc < 1.0-1
 Obsoletes: libpostproc-devel < 1.0-1
 Requires: pkgconfig
+Requires: libavutil
 
 %description libpostproc
 FFmpeg is a very fast video and audio converter. It can also grab from a
@@ -142,6 +143,21 @@ live audio/video source.
 This package contains only ffmpeg's libpostproc post-processing library which
 other projects such as transcode may use. Install this package if you intend
 to use MPlayer, transcode or other similar programs.
+
+%package libavutil
+Summary: Video postprocessing library from ffmpeg
+Group: System Environment/Libraries
+Provides: ffmpeg-libavutil-devel = %{version}-%{release}
+Provides: libavutil = 1.0-1
+Provides: libavutil-devel = 1.0-1
+Requires: pkgconfig
+
+%description libpostproc
+FFmpeg is a very fast video and audio converter. It can also grab from a
+live audio/video source.
+
+This package contains only ffmpeg's libavutil library.
+
 
 %prep
 %setup
@@ -220,6 +236,9 @@ chcon -t textrel_shlib_t %{_libdir}/libav{codec,device,format,util}.so.*.*.* &>/
 %post libpostproc -p /sbin/ldconfig
 %postun libpostproc -p /sbin/ldconfig
 
+%post libavutil -p /sbin/ldconfig
+%postun libavutil -p /sbin/ldconfig
+
 %files
 %defattr(-, root, root, 0755)
 %doc Changelog COPYING* CREDITS INSTALL.md LICENSE.md MAINTAINERS README.md RELEASE RELEASE_NOTES VERSION
@@ -236,7 +255,6 @@ chcon -t textrel_shlib_t %{_libdir}/libav{codec,device,format,util}.so.*.*.* &>/
 %{_libdir}/libavdevice.so.*
 %{_libdir}/libavfilter.so.*
 %{_libdir}/libavformat.so.*
-%{_libdir}/libavutil.so.*
 %{_libdir}/libswscale.so.*
 %{_libdir}/libswresample.so.*
 #%{_libdir}/vhook/
@@ -248,28 +266,25 @@ chcon -t textrel_shlib_t %{_libdir}/libav{codec,device,format,util}.so.*.*.* &>/
 %{_includedir}/libavdevice/
 %{_includedir}/libavfilter/
 %{_includedir}/libavformat/
-%{_includedir}/libavutil/
 %{_includedir}/libswscale/
 %{_includedir}/libswresample/
 %{_libdir}/libavcodec.a
 %{_libdir}/libavdevice.a
 %{_libdir}/libavfilter.a
 %{_libdir}/libavformat.a
-%{_libdir}/libavutil.a
 %{_libdir}/libswscale.a
 %{_libdir}/libswresample.a
 %{_libdir}/libavcodec.so
 %{_libdir}/libavdevice.so
 %{_libdir}/libavfilter.so
 %{_libdir}/libavformat.so
-%{_libdir}/libavutil.so
 %{_libdir}/libswscale.so
 %{_libdir}/libswresample.so
 %{_libdir}/pkgconfig/libavcodec.pc
 %{_libdir}/pkgconfig/libavdevice.pc
 %{_libdir}/pkgconfig/libavfilter.pc
 %{_libdir}/pkgconfig/libavformat.pc
-%{_libdir}/pkgconfig/libavutil.pc
+
 %{_libdir}/pkgconfig/libswscale.pc
 %{_libdir}/pkgconfig/libswresample.pc
 
@@ -280,6 +295,13 @@ chcon -t textrel_shlib_t %{_libdir}/libav{codec,device,format,util}.so.*.*.* &>/
 %{_libdir}/libpostproc.a
 %{_libdir}/libpostproc.so*
 %{_libdir}/pkgconfig/libpostproc.pc
+
+%files libavutil
+%defattr(-, root, root, 0755)
+%{_includedir}/libavutil/
+%{_libdir}/libavutil.a
+%{_libdir}/libavutil.so.*
+%{_libdir}/pkgconfig/libavutil.pc
 
 %changelog
 * Sun Jan 29 2012 Dag Wieers <dag@wieers.com> - 0.6.5-1
