@@ -57,7 +57,7 @@ BuildRequires: SDL-devel
 BuildRequires: freetype-devel
 BuildRequires: imlib2-devel
 BuildRequires: zlib-devel
-%{!?_without_speex:Requires: speex-devel} \
+%{!?_without_speex:BuildRequires: speex-devel}
 %{!?_without_a52dec:BuildRequires: a52dec-devel}
 %{!?_without_dc1394:BuildRequires: libdc1394-devel}
 %{!?_without_dirac:BuildRequires: dirac-devel}
@@ -96,7 +96,7 @@ Summary: Header files and static library for the ffmpeg codec library
 Group: Development/Libraries
 Requires: %{name} = %{version}
 Requires: imlib2-devel, SDL-devel, freetype-devel, zlib-devel, pkgconfig
-%{!?_without_speex:Requires: speex-devel} \
+%{!?_without_speex:Requires: speex-devel}
 %{!?_without_a52dec:Requires: a52dec-devel}
 %{!?_without_dc1394:Requires: libdc1394-devel}
 %{!?_without_dirac:Requires: dirac-devel}
@@ -152,7 +152,7 @@ Provides: libavutil = 1.0-1
 Provides: libavutil-devel = 1.0-1
 Requires: pkgconfig
 
-%description libpostproc
+%description libavutil
 FFmpeg is a very fast video and audio converter. It can also grab from a
 live audio/video source.
 
@@ -300,7 +300,7 @@ chcon -t textrel_shlib_t %{_libdir}/libav{codec,device,format,util}.so.*.*.* &>/
 %defattr(-, root, root, 0755)
 %{_includedir}/libavutil/
 %{_libdir}/libavutil.a
-%{_libdir}/libavutil.so.*
+%{_libdir}/libavutil.so*
 %{_libdir}/pkgconfig/libavutil.pc
 
 %changelog
